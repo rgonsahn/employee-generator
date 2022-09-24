@@ -1,142 +1,167 @@
-const inquirer= require('inquirer');
-const fs = require('fs'); 
+const inquirer = require('inquirer');
+const fs = require('fs');
 
 const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const Manager = require('./lib/Manager'); 
-const { ADDRGETNETWORKPARAMS } = require('dns');
-
-const team= [];
-
-const newManager=[
-    {
-        name:'role', 
-        type:'confirm',
-        message:'Welcome to the Team Profile Generator! Are you ready to begin?',
-    },
-    {
-        name: 'name',
-        type: 'input',
-        message: 'Please enter the name of the manager'
-    },
-    {
-        name: "id",
-        type: "input",
-        message:"What is your employee ID?",
-    }, 
-    {
-        name:'email',
-        type:'input',
-        message:'Please enter your email address.',
-    },
-    {
-        name:'Office Phone Number',
-        type:'input',
-        message:'Please provide your office phone number.',
-    }, 
-    {
-        name:'next option',
-        type:'list',
-        choices: ['Add Employee', 'Add Engineer', 'Add Intern', 'My team is complete!'],
-        message:'Please select from these options',
-    },
-]
-const newEmployee=[
-    {
-        name:'name',
-        type:'input',
-        message:'Please enter the name of the employee',
-    },
+const Manager = require('./lib/Manager');
+const { getRandomValues } = require('crypto');
 
 
-    {
-        name:'id',
-        type:'input',
-        message:'Please enter the employee ID',
-    },
-    {
-        name:'email',
-        type:'input',
-        message:"Please enter your employee's email",
-    },
-    {
-        name:'next option',
-        type:'list',
-        choices: ['Add Intern', 'Add Engineer', 'Add Manager', 'My team is complete!'],
-        message:'Please select from these options',
-    },
-   
-] 
-const newEngineer= [
-    {
-        name:'name',
-        type:'input',
-        message:'Please enter the name of the engineer',
-    },
-     {
-        name:'id',
-        type:'input',
-        message:'Please enter the id of the engineer',
-    },
-    {
-        name:'email',
-        type:'input',
-        message:'Please enter the email address of the engineer',
-    }, 
-    {
-        name:'Github',
-        type:'input',
-        message:"Please enter the engineer's Github username",
-    },
-    {
-        name:'next option',
-        type:'list',
-        choices: ['Add Employee', 'Add Intern', 'Add Manager', 'My team is complete!'],
-        message:'Please select from these options',
-    },
-]
+const team = [];
 
 
-    const newIntern=[
-        {
-            name:'name',
-            type:'input',
-            message:"What is the Intern's name",
-        },
-        {
-            name:'id',
-            type:'input',
-            message:"Please enter the Intern's employee ID",
-        },
-        {
-            name:'email',
-            type:'input',
-            message:'Please enter the email of the Intern',
-        },
-        {
-            name:'school',
-            type:'input',
-            message:'What university or college does the intern attend',
-        },
-        {
-        name:'next option',
-        type:'list',
-        choices: ['Add Employee', 'Add Engineer', 'Add Manager', 'My team is complete!'],
-        message:'Please select from these options',
-        },
-
-
-    ]
-
-
-function init() {
+function askManager() {
     inquirer
-        .prompt(questions)
-        .then((answers) => {
-            // Use user feedback for... whatever!!
-            console.log(answers)
-           
+        .prompt([
+            {
+                name: 'name',
+                type: 'input',
+                message: 'Please enter the name of the manager',
+            },
+            {
+                name: "id",
+                type: "input",
+                message: "What is your employee ID?",
+            },
+            {
+                name: 'email',
+                type: 'input',
+                message: 'Please enter your email address.',
+            },
+            {
+                name: 'OfficePhoneNumber',
+                type: 'input',
+                message: 'Please provide your office phone number.',
+            },
+        ])
+        .then(function (response) {
+            const manager = new Manager(
+                response.name,
+                response.id,
+                response.email,
+                response.OfficePhoneNumber);
+
+            team.push(manager);
+            if (response.OfficePhoneNumber !== "") {
+                getEmployee();
+            }
+
+
         })
 }
-init();
+askManager();
+
+function getEmployee() {
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'staff',
+                choices: ["Engineer", "Intern", "I'm done building my team"],
+
+            }
+        ])
+        .then(function (response) {
+            if (response.staff === 'Engineer') {
+                askEngineer();
+            } else if (response.staff === 'Intern') {
+                askIntern();
+            } else {
+                build();
+            }
+
+        })
+}
+
+function askEngineer() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'engineerName',
+                message: 'What is the name of the egineer'
+
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: "What is the engineer's employee id",
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: "What is the engineer's email address",
+            },
+            {
+                type: 'input',
+                name: 'GitHub',
+                message: "What is the engineer's GitHub username?",
+            },
+        ])
+        .then(function (response) {
+            const engineer = new Engineer(
+                response.engineerName,
+                response.id,
+                response.email,
+                response.GitHub);
+            team.push(engineer)
+            if (response.GitHub !== "") {
+                getEmployee();
+            }
+
+        })
+}
+
+function askIntern() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'internName',
+                message: 'What is the intern name?',
+            },
+            {
+                type: 'input',
+                name: 'internID',
+                message: "What is the intern's employee id?",
+            },
+            {
+                type: 'input',
+                name: 'internEmail',
+                message: "What is the intern's email address",
+            },
+            {
+                type: 'name',
+                name: 'internSchool',
+                message: "What is the intern's university or college",
+            },
+        ])
+        .then(function (response) {
+            const intern = new Intern(
+                response.internName,
+                response.internID,
+                response.internEmail,
+                response.internSchool);
+            team.push(intern);
+            if (response.internSchool !== "") {
+                getEmployee()
+            }
+
+        })
+
+}
+
+function build() {
+    teamProfiles = [];
+    let header = `
+            <! DOCTYPE html>
+            <html lang="en"
+            <header>
+            <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+    <title>Team Profiles</title>
+            <header/>`
+}
