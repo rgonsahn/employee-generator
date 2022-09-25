@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const bootStrap= require('bootstrap')
 
 const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
@@ -161,7 +162,17 @@ function build() {
             <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
+    <link rel="stylesheet" href=https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js>
     <title>Team Profiles</title>
-            <header/>`
+    <header/>
+    <body>
+        <div class="jumbotron font-weight-bold text-center">
+            <h1>TEAM PROFILES</h1>
+        </div>
+    
+        <div class="container justify-content-center">
+    
+            <div class="d-flex flex-wrap justify-content-center"> `
+
+            
 }
