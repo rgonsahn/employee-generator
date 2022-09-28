@@ -6,7 +6,6 @@ const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-const { getRandomValues } = require('crypto');
 
 
 const team = [];
@@ -174,5 +173,20 @@ function build() {
     
             <div class="d-flex flex-wrap justify-content-center"> `
 
-            
+            newCard.push(header); 
+            for (let i=0;i< team.length; i++){
+            if (team[i].OfficePhoneNumber){
+                teamProfiles.innerHtml=
+                `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
+                <div class="card-body bg-dark text-light">
+                <h4 class="card-header">Role: ${team[i].name}</h4>
+                <h4 class="card-title">${team[i].getRole()}</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Employee ID: ${team[i].id}</li>
+                <li class="list-group-item">Email:<a href="mailto:${team[i].email}">${team[i].email}</a></li>
+                <li class="list-group-item">Phone Number: ${team[i].OfficePhoneNumber}</li>    
+                </div>`
+            }
+            }
 }
