@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const bootStrap= require('bootstrap')
+// const bootStrap= require('bootstrap')
 
 const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
@@ -9,6 +9,7 @@ const Manager = require('./lib/Manager');
 
 
 const team = [];
+const newHtml = [];
 
 
 function askManager() {
@@ -161,7 +162,7 @@ function build() {
             <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href=https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js">
     <title>Team Profiles</title>
     <header/>
     <body>
@@ -173,10 +174,10 @@ function build() {
     
             <div class="d-flex flex-wrap justify-content-center"> `
 
-            newCard.push(header); 
-            for (let i=0;i< team.length; i++){
-            if (team[i].OfficePhoneNumber){
-                teamProfiles.innerHtml=
+    newCard.push(header);
+    for (let i = 0; i < team.length; i++) {
+        if (team[i].officeNumber) {
+            teamProfiles.innerHtml =
                 `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
                 <div class="card-body bg-dark text-light">
                 <h4 class="card-header">Role: ${team[i].name}</h4>
@@ -185,8 +186,42 @@ function build() {
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item">Employee ID: ${team[i].id}</li>
                 <li class="list-group-item">Email:<a href="mailto:${team[i].email}">${team[i].email}</a></li>
-                <li class="list-group-item">Phone Number: ${team[i].OfficePhoneNumber}</li>    
+                <li class="list-group-item">Phone Number: ${team[i].officeNumber}</li>    
                 </div>`
-            }
-            }
+        } else if (team[i].gitHub) {
+            teamProfiles.innerHtml +=
+                `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
+                <div class="card-body bg-dark text-light">
+                <h4 class="card-header">Role: ${team[i].name}</h4>
+                <h4 class="card-title">${team[i].getRole()}</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Employee ID: ${team[i].id}</li>
+                <li class="list-group-item">Email:<a href="mailto:${team[i].email}">${team[i].email}</a></li>
+                <li class="list-group-item">Phone Number: ${team[i].gitHub}</li>    
+                </div>`
+
+        } else if (team[i].school) {
+            teamProfiles.innerHtml +=
+                `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
+                <div class="card-body bg-dark text-light">
+                <h4 class="card-header">Role: ${team[i].name}</h4>
+                <h4 class="card-title">${team[i].getRole()}</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Employee ID: ${team[i].id}</li>
+                <li class="list-group-item">Email:<a href="mailto:${team[i].email}">${team[i].email}</a></li>
+                <li class="list-group-item">Phone Number: ${team[i].school}</li>    
+                </div>`
+        }
+    } newHtml.push(teamProfiles.innerHtml);
+    let theEndHtml =
+        ` </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+        </html>`
+        newHtml.push(theEndHtml); 
+        fs.writeFile
+
 }
