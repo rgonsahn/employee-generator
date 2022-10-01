@@ -156,15 +156,17 @@ function askIntern() {
 function build() {
     teamProfiles = [];
     let header = `
-            <! DOCTYPE html>
-            <html lang="en"
+            <!DOCTYPE html>
+            <html lang="en">
             <header>
             <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Silkscreen&family=Oleo+Script+Swash+Caps&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../distribution/style.css" />
     <title>Team Profiles</title>
-    <header/>
+    </header>
     <body>
         <div class="jumbotron font-weight-bold text-center">
             <h1>TEAM PROFILES</h1>
@@ -174,14 +176,14 @@ function build() {
     
             <div class="d-flex flex-wrap justify-content-center"> `
 
-    newCard.push(header);
+    newHtml.push(header);
     for (let i = 0; i < team.length; i++) {
         if (team[i].officeNumber) {
             teamProfiles.innerHtml =
                 `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-body bg-dark text-light">
-                <h4 class="card-header">Role: ${team[i].name}</h4>
-                <h4 class="card-title">${team[i].getRole()}</h4>
+                <div class="card-body bg-success text-light">
+                <h4 class="card-header">Name: ${team[i].name}</h4>
+                <h4 class="card-title">Role:${team[i].getRole()}</h4>
                 </div>
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item">Employee ID: ${team[i].id}</li>
@@ -191,9 +193,9 @@ function build() {
         } else if (team[i].gitHub) {
             teamProfiles.innerHtml +=
                 `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-body bg-dark text-light">
-                <h4 class="card-header">Role: ${team[i].name}</h4>
-                <h4 class="card-title">${team[i].getRole()}</h4>
+                <div class="card-body bg-warning text-dark">
+                <h4 class="card-header">Name: ${team[i].name}</h4>
+                <h4 class="card-title">Role:${team[i].getRole()}</h4>
                 </div>
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item">Employee ID: ${team[i].id}</li>
@@ -204,9 +206,9 @@ function build() {
         } else if (team[i].school) {
             teamProfiles.innerHtml +=
                 `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-body bg-dark text-light">
-                <h4 class="card-header">Role: ${team[i].name}</h4>
-                <h4 class="card-title">${team[i].getRole()}</h4>
+                <div class="card-body bg-success text-light">
+                <h4 class="card-header">Name: ${team[i].name}</h4>
+                <h4 class="card-title">Role:${team[i].getRole()}</h4>
                 </div>
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item">Employee ID: ${team[i].id}</li>
@@ -221,7 +223,9 @@ function build() {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
         </html>`
-        newHtml.push(theEndHtml); 
-        fs.writeFile
+    newHtml.push(theEndHtml);
+    fs.writeFile("./distribution/htmlCard.html", newHtml.join(""), function (err) {
+        err ? console.error(err) : console.log('Thank you!Your team has been generated')
+    })
 
 }
