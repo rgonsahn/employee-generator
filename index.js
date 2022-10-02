@@ -11,7 +11,7 @@ const Manager = require('./lib/Manager');
 const team = [];
 const newHtml = [];
 
-
+//Generates the manager questions
 function askManager() {
     inquirer
         .prompt([
@@ -74,7 +74,7 @@ function getEmployee() {
 
         })
 }
-
+//Generates the engineer questions
 function askEngineer() {
     inquirer
         .prompt([
@@ -113,7 +113,7 @@ function askEngineer() {
 
         })
 }
-
+//Generates the intern questions
 function askIntern() {
     inquirer
         .prompt([
@@ -152,7 +152,7 @@ function askIntern() {
         })
 
 }
-
+//Builds the html cards for each team member
 function build() {
     teamProfiles = [];
     let header = `
@@ -162,26 +162,26 @@ function build() {
             <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Silkscreen&family=Oleo+Script+Swash+Caps&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../distribution/style.css" />
     <title>Team Profiles</title>
     </header>
     <body>
-        <div class="jumbotron font-weight-bold text-center">
+        <div id="header" class="jumbotron font-weight-bold text-center">
             <h1>TEAM PROFILES</h1>
         </div>
     
         <div class="container justify-content-center">
     
             <div class="d-flex flex-wrap justify-content-center"> `
-
+//used office number from Manager.js file to target the manager card
     newHtml.push(header);
     for (let i = 0; i < team.length; i++) {
         if (team[i].officeNumber) {
             teamProfiles.innerHtml =
                 `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-body bg-success text-light">
+                <div class="card-body bg-secondary text-light">
                 <h4 class="card-header">Name: ${team[i].name}</h4>
                 <h4 class="card-title">Role:${team[i].getRole()}</h4>
                 </div>
@@ -190,23 +190,24 @@ function build() {
                 <li class="list-group-item">Email:<a href="mailto:${team[i].email}">${team[i].email}</a></li>
                 <li class="list-group-item">Phone Number: ${team[i].officeNumber}</li>    
                 </div>`
+                //Used gitHub to target the Engineer card
         } else if (team[i].gitHub) {
             teamProfiles.innerHtml +=
                 `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-body bg-warning text-dark">
+                <div class="card-body bg-info text-dark">
                 <h4 class="card-header">Name: ${team[i].name}</h4>
                 <h4 class="card-title">Role:${team[i].getRole()}</h4>
                 </div>
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item">Employee ID: ${team[i].id}</li>
                 <li class="list-group-item">Email:<a href="mailto:${team[i].email}">${team[i].email}</a></li>
-                <li class="list-group-item">Phone Number: ${team[i].gitHub}</li>    
+                <li class="list-group-item"><a href= "${team[i].getGithub()}"target="_blank" href="https://github.com">Github</a></li>    
                 </div>`
-
+//Used school to target the intern card
         } else if (team[i].school) {
             teamProfiles.innerHtml +=
                 `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-body bg-success text-light">
+                <div class="card-body bg-warning text-light">
                 <h4 class="card-header">Name: ${team[i].name}</h4>
                 <h4 class="card-title">Role:${team[i].getRole()}</h4>
                 </div>
@@ -220,10 +221,11 @@ function build() {
     let theEndHtml =
         ` </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" ></script>
     </body>
         </html>`
     newHtml.push(theEndHtml);
+    //Creates the team member's cards in html file
     fs.writeFile("./distribution/htmlCard.html", newHtml.join(""), function (err) {
         err ? console.error(err) : console.log('Thank you!Your team has been generated')
     })

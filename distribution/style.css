@@ -1,7 +1,13 @@
 h1{
     font-family: 'Dancing+Script';
     color: cadetblue;
+    background-color: bisque;
 }
 body{
-font-family: 'Silkscreen';
+font-family: 'Dancing+Script';
+} 
+#header{
+    background-color: bisque;
+    border: thick;
+    border-color: dimgray;
 }
