@@ -13,5 +13,18 @@ First clone my repository in your local terminal. Run the npm install command, f
 ## Built With
 node js
 npm inquire
-fs(File System)
+fs(File System) 
+Bootstrap  
+
+## Contributions
+Follow the repo link below and submit a pull request. Contributions to the development of this application are welcome.
+
+## Demo-Video
+
+## Questions 
+All queries about my repo can be addressed via email at <a href="mailto:rgonsahn@yahoo.com">mail link</a>
+ or follow more of my work on github at rgonsahn.
+
+
+## Screenshot
 

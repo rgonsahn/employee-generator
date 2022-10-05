@@ -201,9 +201,10 @@ function build() {
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item">Employee ID: ${team[i].id}</li>
                 <li class="list-group-item">Email:<a href="mailto:${team[i].email}">${team[i].email}</a></li>
-                <li class="list-group-item"><a href= "${team[i].getGithub()}"target="_blank" href="https://github.com">Github</a></li>    
+                <li class="list-group-item"><a href= "${team[i].getGithub()}">Github:/github.com/rgonsahn/employee-generator</a></li>    
                 </div>`
-//Used school to target the intern card
+
+                //Used school to target the intern card
         } else if (team[i].school) {
             teamProfiles.innerHtml +=
                 `<div class="card text-bg-info mb-3" style="max-width: 18rem;">
