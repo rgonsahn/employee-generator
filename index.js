@@ -201,7 +201,7 @@ function build() {
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item">Employee ID: ${team[i].id}</li>
                 <li class="list-group-item">Email:<a href="mailto:${team[i].email}">${team[i].email}</a></li>
-                <li class="list-group-item"><a href="${team[i].getGithub()}"></a></li>    
+                <li class="list-group-item"><a href="https://www.github.com/${team[i].getGithub()}">GitHub</a></li>    
                 </div>`
 
                 //Used school to target the intern card
